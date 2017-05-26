@@ -10,5 +10,9 @@
   "license": "ISC",
   "devDependencies": {
     "docco": "^0.7.0"
+  },
+  "dependencies": {
+    "highlightjs": "^9.10.0",
+    "underscore": "^1.8.3"
   }
 }
