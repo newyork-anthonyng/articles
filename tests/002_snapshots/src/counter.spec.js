@@ -10,6 +10,7 @@ describe('Without snapshots 😥', () => {
     );
 
     expect(wrapper.find('h1').length).toEqual(1);
+    expect(wrapper.find('h1').at(0).html()).toEqual('<h1>0</h1>');
   });
 
   it('should render a button', () => {
@@ -52,5 +53,3 @@ describe('With snapshots 🎉', () => {
     expect(toJSON(wrapper)).toMatchSnapshot();
   });
 });
-
-

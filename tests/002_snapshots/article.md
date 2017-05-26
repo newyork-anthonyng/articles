@@ -1,14 +1,18 @@
 Snapshot all the things
 
-This article is about using Jest's snapshot feature.
-Video about Jest snapshots https://www.youtube.com/watch?v=HAuXJVI_bUs&t=1s
+This article is about using Jest's snapshot feature. Watch this awesome talk about Jest snapshots (https://www.youtube.com/watch?v=HAuXJVI_bUs&t=1s) which does a better job than me.
 
-Annoying thing about tests is maintaining them
+One of the most annoying thing about tests for me is maintaining them.
+I find there are many times where I change one line of code which breaks a dozen tests.
+It takes me more time to update the tests than it does to update the source code.
 
-You want to keep tests DRY
-But DRY in the sense that you do not have to fix multiple broken tests after a code change
+Your source code should be DRY, but your test code should also be DRY.
+It should be DRY in the sense that you don't have to repeat yourself when you are fixing your tests.
+Maintaining your tests shouldn't be painful.
 
-Take a look at this example
+This is where snapshot tests come in.
+Let's take a look at a painful test setup.
+
 ## Include code snippets of tests without snapshot tests
 
 Notice how many tests would break if we changed the text inside our <h1> tag. Or if we decided to change the <h1> tag to a <h3> tag.
@@ -20,15 +24,30 @@ Now let's see what our tests would look like if we used snapshots in our tests
 What happens if we change the text inside our <h1> tag. The same tests would break as before.
 But this time, you don't have to manually update anything.
 
-When you run watch feature in Jest, it will tell you what part of spec files have changed.
+Run Jest in watch mode. Jest will give you a visual diff between what your current test's output is and your snapshot files.
 If you are happy with the changes, all you have to do is tell Jest that you are happy with the changes.
 Jest will automatically update the snapshots itself. You don't have to do anything else.
+
+And how do we update the snapshots?
 ## Include screenshot of Jest output.
+Just press "u".
 
-Snapshot tests aren't restricted to React components.
-If you have any tests where you are checking for the existence of something, or that something didn't change, consider using snapshot tests.
+# Snapshot tests aren't restricted to React components.
+If you have any tests where you are checking for the existence of something (or that something didn't change), consider using snapshot tests. If a test assertion can be represented nicely as a snapshot, then use snapshots
 
-For example, take a look at Redux reducers.
+P.S. The key here is that it can be represented as JSON.
+```
+const a = () => { return 0; };
+
+expect(a).toMatchSnapshot();
+```
+The snapshot that would get produced here is:
+```
+exports[`should have useless snapshot 1`] = `[Function]`;
+```
+This isn't a great example of using a snapshot because the snapshot of a function is '[Function]'.
+
+Redux reducers are a great example.
 ## Include code snippets of tests without snapshot tests
 
 What happens if we decide to include Price in our state. We would have to go through every single test and update our "expected" value
@@ -36,7 +55,6 @@ What happens if we decide to include Price in our state. We would have to go thr
 Would snapshots have helped?
 ## Include code snippets of tests with snapshot tests
 
-With snapshot tests, the same tests would fail. But Jest is going to do all the manual work for us. All we have to do is see if the changes are intended.
+Again, Jest provides us with a visual diff and does all the manual work for us.
 
-When I write my tests now, I always default to see if I can write the test using snapshots.
-Makes life easier. Etc.
+Before you write your next test, see if snapshots will make your test maintenance easier.
