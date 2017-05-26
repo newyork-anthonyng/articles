@@ -1,150 +1,106 @@
-# Todo: Host the documentation
-
 # Deliberate Practice: What I learned from reading docco
 
 # Introduction
-  I was browsing through open source projects, trying to find the next one I would study.
-  I came upon underscorejs and its annotated source code.
-  http://underscorejs.org/docs/underscore.html
-  When I saw this, I was amazed. This is what I wanted!
-  On the right side of the page was the source code.
-  On the left side of the page were notes explaining each block of code.
-  It was amazing and gave me so much insight into what the source code was doing.
-  It was knowledge that I most likely would not have gotten if I read through it myself.
-  I wanted to know what produced this magical annotated code, and was directed to docco.
+I was browsing through open source projects, trying to find the next one I would study. I came upon underscore.js and its annotated source code (see link here http://underscorejs.org/docs/underscore.html). The annotated source code amazed me. On the right side of the page was the source code. On the left side of the page were notes explaining each block of code. This was knowledge that I would not have gotten from reading the source code on my own. I wanted to know what produced this beautiful documentation and found Docco.
 
 # What is docco?
-  * a tool for creating literate programming guides
-  Repo found here. https://github.com/jashkenas/docco
-  From its README.md, Docco is a "literate-programming-style documentation generator."
-  It is a command line tool which takes in source code, and creates beautiful documentation like the one we saw for underscore.
-  Docco only provides a way for you to generate the documentation. It doesn't create the annotation itself.
+Docco (https://github.com/jashkenas/docco) is a "literate-programming-style documentation generator." It is a program which takes your source code and creates annotated documentation. Note that Docco only generates the layout of the documentation. The comments from your source code serves as the annotations.
 
-  * include tutorial for how to use it
-  https://github.com/newyork-anthonyng/articles/tree/master/deliberate_practice/002_docco/tutorial
-  I have a great `greet` function that I want to document.
-  I included descriptive comments, which will act as my annotations
-  Install the docco package `npm install --save-dev docco`
-  Run the docco script, while passing in the name of the files you want to generate documentation for.
-  In my case, I will run `./node_modules/.bin/docco app.js`. This will generate documentation for my `app.js` file.
-  By default, it will create a `docs` directory and place all my documentation there
-  There are a number of other configurations you can pass it, including customized CSS and the actual layout of the annotations
-  https://github.com/newyork-anthonyng/articles/tree/master/deliberate_practice/002_docco/tutorial/linearDocs
+I have an amazing function that I want to create documentation for. (see this link https://github.com/newyork-anthonyng/articles/blob/master/deliberate_practice/002_docco/tutorial/app.js). I included descriptive comments which will act as my annotations.
 
-  * this will be effective for my articles
-  This would be a great way for me to keep notes on the projects I am dissecting
+To use docco, I will install it locally with `npm install --save-dev docco`.
+The docco command accepts file names, which it will generate documentation for. My program is saved as `app.js`, so I will run `./node_modules/.bin/docco app.js`. And that's all it takes!
+
+By default, docco will place all generated documentation into a new `docs` directory.
+You can configure docco to use different CSS or different layouts. Check out this `linear` layout of the annotated code.
+(see this link)(https://github.com/newyork-anthonyng/articles/tree/master/deliberate_practice/002_docco/tutorial/linearDocs).
+Check out docco's README.md for more details.
+
+I am going to start using docco to start annotating all future Open Source projects that I work through.
 
 * What is literate programming?
-  * Expressing programming logic in plain language
-  https://en.wikipedia.org/wiki/Literate_programming
-  With literate programming, the expression of the program logic in plain language is the primary goal.
-  This means that the documentation should follow the same order as the logic, and not the same order as the source code.
-  The order of the source code is generally structured to make the compiler happy. It is not necessarily the same order that you would explain the program to someone else.
-  Therefore, Docco doesn't generate literate programming documentation in the true sense of it.
-  This is because Docco generates its documentation in the same order as its source code.
-  I still think that this annotated source code is still valuable.
-  I like to think of it as pseudocode
+With literate programming, you want to express your program logic in plain language. A person should be able to read through it like a book and understand what is happening.
+ (See this link to learn more https://en.wikipedia.org/wiki/Literate_programming).
+
+This means that documentation should follow the same order as the program logic, and not the same order as the source code.
+We write programs in an order that makes our compiler happy. Sometimes, this order is not the same as the logic of our program.
+
+So, Docco doesn't generate literate programming documentation in its truest sense. Docco generates its documentation in the same order as its source code. But, I still think that this annotated source code is valuable. Think of it as pseudocode for a block of code.
 
 * Taking things apart and putting them back together
-  * invest time in creating a short feedback loop
-    When starting to study a new project, invest time into setting up your environment.
-    It may be setting up the test suite, so that you can mess with the source code and get feedback that you're breaking something.
-    It may be finding a quick way to run the source code from node to see your console logs.
-    Invest the time to setting up a flow so that you can get a short feedback loop.
-    I feel like this is what makes Test Driven Development so enjoyable for me.
-    You get to see the results of your mini-experiments right away.
-    You feel like you're making progress.
-    I would suggest not even touching the source code until you find a way to get this short feedback loop.
-    In my case, I was quickly running the source code in node by running `node docco.js app.js` in the `docco` repository.
-    This is what my source code looked like (https://github.com/newyork-anthonyng/articles/blob/master/deliberate_practice/002_docco/docco.js), with more than 150 lines of my comments
+When starting to understand a new project, invest time into setting up a feedback loop. It may be setting up the project test suite, so that you can edit the source code and see what breaks. It may be finding a quick way to run the source code from your terminal to see your console logs. I would not start browsing the source code until you have a way of creating this feedback loop.
 
-  * Kent Dodds said that you should work on Open Source projects that you will use (https://medium.com/@kentcdodds/what-open-source-project-should-i-contribute-to-7d50ecfe1cb4)
-    * created my own version of docco-lite because maintenance of docco seemed to be dead
-    I decided to create my own version of docco because it was something that I would want to use myself.
-    You can tell the pulse of a project by looking at the timing of its last commit, the number of stale issues, and the number of stale Pull Requests outstanding.
-    The docco project didn't seem to be actively maintained.
-    I decided to create my own, if not for the fun learning experience.
-    * I created docco-lite, which I published to npm (which was a good learning experience in its own right)
-    * bin directory
+This is what makes Test Driven Development so effective and enjoyable for me. You see what your code is doing instantly. Without a feedback loop, you will be coding in the dark.
+
+For me, I was running docco's source code in my terminal by running `node docco.js app.js`, where `app.js` was a dummy file. I was able to see the results of my `console.log`'s by running this command. This is what my beautiful source code looked like, with over 150 lines of my own comments. (see this link https://github.com/newyork-anthonyng/articles/blob/master/deliberate_practice/002_docco/docco.js).
+
+* Work on projects you will use regularly
+Kent Dodds wrote a great article about contributing to Open Source projects. (See link here https://medium.com/@kentcdodds/what-open-source-project-should-i-contribute-to-7d50ecfe1cb4). His suggestion is to only work on projects that you will use regularly. This is how I have chosen the projects I have worked on.  I decided to create my own version of docco because it was something that I would want to use myself.
+
+I also decided against using Docco itself because its maintenance seemed to be dead. Was the latest commit  from over 2 years ago? Are there stale outstanding issues from years ago? Are there a lot of ignored Pull Requests? These are good indicators that this project may be dead.
+
+Most importantly, I wanted to create and publish docco-lite for the learning experience.
 
 * Awesome libraries exist outside of the browser as well
-  * Working in the frontend world, I know that there are no shortages of libraries and frameworks available to me
-  I work as a frontend engineer, developing in React.
-  I know that there are plenty of libraries and frameworks available to me, including React, Vue, Preact, Marko, etc.
-  I was ignorant of the rich number of libraries available outside of the frontend world.
+I have concentrated on the front-end world. I know there are no shortages of libraries and frameworks that are available to me. I was ignorant of the amazing libraries available outside of the front-end world.
 
-  Some awesome libraries that I worked with included:
-    * fs-extra (https://github.com/jprichardson/node-fs-extra)
-      A beefed up version of the file system (fs) module.
-      It was very cool to create directories and files. It's definitely a change from creating <div>'s and <h1>'s
-    * commander (https://github.com/tj/commander.js)
-      A library to help you create command-line interfaces
-      It helps you manage arguments passed into the command
-      I didn't use it enough to take full advantage of it.
-      Used it to print out "help"
-    * chalk (https://github.com/chalk/chalk)
-      Style your strings that are printed in your terminal
-    * highlightjs (https://highlightjs.org/)
-      Highlight a chunk of code into HTML.
-      This is what Docco uses to format the code
-      Include code snippet of what it does (https://github.com/newyork-anthonyng/articles/blob/master/deliberate_practice/002_docco/tutorial/highlightExample.js)
+Here are some awesome libraries that Docco used.
+
+fs-extra (see link here https://github.com/jprichardson/node-fs-extra)
+fs-extra is a beefed up version of the file system (fs) module. It was very cool to create directories and files, instead of creating <div>'s and <h1>'s.
+
+commander (see link here https://github.com/tj/commander.js)
+Commander is a library that creates command-line interfaces.
+
+chalk (see link here https://github.com/chalk/chalk)
+Chalk lets you style your terminal strings 💅
+Include link from chalk README.md (https://raw.githubusercontent.com/chalk/ansi-styles/master/screenshot.png)
+
+highlightjs (see link here https://highlightjs.org/)
+highlightjs can create HTML out of a string of code.
+https://github.com/newyork-anthonyng/articles/blob/master/deliberate_practice/002_docco/tutorial/highlightExample.js
+With this HTML output, you can add CSS to style your code snippets.
 
 * JavaScript Templates
-  When I went to General Assembly's bootcamp, before we learned any fancy Angular/React, we learned Handlebars.
-  Handlebars was a simple templating language, which puts JavaScript into your HTML (gasp).
-  It's definitely a different approach from React, which puts your HTML into your JavaScript, so that you can get the full power of JavaScript.
-  However, if you have a simple project, sometimes a simple templating language is enough to get you by.
-  Another templating language, MarkoJS, uses syntax similar to this.
-  After working with React for a year, I was surprised and how simple it was to get a template up and working.
-  Include quick tutorial of JavaScript templating language
-  If you want to include JavaScript in your template, use <% %>.
-  For example, I want to declare a variable. <% var person = 'Anthony'; %>
-  If you want the JavaScript to actually render as text, use <%= %>. (note the additional equal (=) sign).
-  <h1><%= person %></h1>. This would render an <h1> tag with the text, Anthony. Cool.
+In General Assembly's bootcamp, I learned Handlebars before the fancy Angular. Handlebars is a simple JavaScript templating language, which puts JavaScript into your HTML. If you have a simple project, sometimes a simple templating language is enough to get you by. The overhead of using React may not make sense.
 
-  You can even get fancy and use for-loops with JavaScript templates.
-  <% for (var i = 0; i < 5; i++) { %> <!-- use <% %> because we are not actually printing anything as text -->
-    <% var myText = "Number " + i; %>
-    <h1 id="<%= i %>">
-      <%= myText %>
-    </h1>
+I have worked with React for the past year. The simplicity and power of using JavaScript templates surprised me. The `underscore` library provides you a simple way to use JavaScript templating.
+
+If you want to include JavaScript in your template, use <% %>.
+For example, I want to declare a variable. <% var person = 'Anthony'; %>
+
+If you want the JavaScript to render as text, use <%= %> (note the equal (=) sign).
+<h1><%= person %></h1>. This would render an <h1> tag with the text, Anthony. Cool.
+
+You can even get fancy and use for-loops with JavaScript templates.
+You can even get fancy and use for-loops with JavaScript templates.
+<% for (var i = 0; i < 5; i++) { %> <!-- use <% %> because we are not actually printing anything as text -->
+  <% var myText = "Number " + i; %>
+  <h1 id="<%= i %>">
+  <%= myText %>
+  </h1>
   <% } %>
 
-  This would print out the following HTML.
+We didn't need webpack, babel, or the virtual dom. The good ol' days of building a webpage 👴
 
 * Create valuable PRs
-  I think contributing to an Open Source project, or starting one of your own, should provide some value for someone.
-  Fixing bugs, adding features, updating documentation will help others.
-  Creating your own project as a learning experience is also valuable.
-  But make sure that the work you are doing is not wasted.
-  Take a look at this repository. (https://github.com/umdjs/umd)
+Contributing to an Open Source project should provide value for someone. You could be helping others by fixing bugs, adding features, or updating documentation. You could be helping yourself by working on a project where you learn something new. But make sure that the work you are doing is not wasted.
 
-  Include screenshot of the README.md.
-  Obviously we can see that there is some formatting issues in the markdown of the README.md.
-  This would be a perfect opportunity to create a PR to fix it.
-  But first, let's make sure we're not wasting our time. Let's look at the outstanding pull requests.
-  See how there are already 11 outstanding Pull Requests to fix the README.md.
-  I think it's awesome that people have cared enough about this project to fix documentation.
-  But creating another PR to do the same thing probably isn't going to help anyone.
+Take a look at the UMDjs repository. (see link here https://github.com/umdjs/umd).
 
-  Before adding a new feature or fixing a bug, create an issue first.
-  The feature might not be wanted for some reason.
-  A bug might be a bug in your code, rather than a bug in the library's source code.
-  Creating issues helps avoid duplicative work done by other Open Sourcerers.
-  And before creating a new issue, spend some time to search through other open issues, as well as previously closed issues to see if it was already addressed.
+Include screenshot of README.md
 
-* Literate programming as a way of lowering the barrier for new developers to contribute.
-  * I believe it is valuable in lowering the barrier for new developers to contribute.
-    * There are a lot of intimidating factors when first starting out on an Open Source project
-      * directory structure
-      * code of conduct
-      * setting up environment
-      * grokking the source code logic
-  I had an idea that annotated source code should be a staple in all Open Source projects, similar to how a Code of Conduct should be included
-  However, some cons are that it requires more maintenance.
-  And there is also a duplication of effort. Well written code, comments, and test cases do the same thing. It would just take longer for newbies to understand the code.
-  I believe that most programmers cannot read code well.
-  I would estimate that programmers write at least twice as much code than they read.
-  It's harder to read code than to write it yourself. This is why many developers prefer a complete rewrite of a program, rather than a refactor.
-  It takes longer to read code.
-  Our habit of skimming while reading does not help when trying to understand code.
+We can see some Markdown formatting issues in the README.md. This would be a perfect opportunity to create a Pull Request to fix this. But before we do this, let's check that our efforts are not wasted. Let's check out the outstanding Pull Requests.
+
+Include screen shot of outstanding Pull Requests.
+Notice how there are 11 outstanding Pull Requests which fix the same thing.
+
+It's awesome that people care enough about this project to fix its documentation. But creating another Pull Request to fix the README.md isn't going to help anyone.
+
+The same can be said before creating a Pull Request to add a new feature or fixing a bug. You should create an issue on Github first. The feature might not be wanted, so the time spent on the Pull Request is a waste. The bug you found might actually be a bug in your own code, rather than a bug in the library's source code.
+
+Creating issues also helps avoid duplicative work done by other Open Sourcerers.  Before creating a new issue, look through other open and closed issues to make sure it's not already fixed.
+
+* Literate programming as a way of lowering the barrier for new developers I believe it is valuable to lower the barrier to contribute to Open Source projects. There are a lot of intimidating factors when starting out on an Open Source project. What is the directory structure? What do I have to download to set up my environment? What base knowledge do I need to have to understand the program logic?
+
+A Code of Conduct is something that is becoming a staple in Open Source projects. (see link on Facebook's code of conduct https://code.facebook.com/pages/876921332402685/open-source-code-of-conduct). I was thinking that annotated source code would become a staple as well.
