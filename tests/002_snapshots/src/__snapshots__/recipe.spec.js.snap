@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`With snapshots 🎉 should handle ADD_INGREDIENT 1`] = `
+Object {
+  "ingredients": Array [
+    "Papaya",
+  ],
+  "name": "",
+}
+`;
+
+exports[`With snapshots 🎉 should handle UPDATE_NAME 1`] = `
+Object {
+  "ingredients": Array [],
+  "name": "Salad",
+}
+`;
+
+exports[`With snapshots 🎉 should return initial state 1`] = `
+Object {
+  "ingredients": Array [],
+  "name": "",
+}
+`;
