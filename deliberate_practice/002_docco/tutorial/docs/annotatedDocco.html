@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>annotatedDocco.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>annotatedDocco.js</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">var</span> Docco, _, buildMatchers, commander, configure, defaults, <span class="hljs-built_in">document</span>, format, fs, getLanguage, highlightjs, languages, marked, parse, path, run, version, write,
+    slice = [].slice;
+
+  <span class="hljs-built_in">document</span> = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">options, callback</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>this is called from “run” command, when we have an argument</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> config;
+    <span class="hljs-keyword">if</span> (options == <span class="hljs-literal">null</span>) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>default options to an empty object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      options = {};
+    }
+    config = configure(options);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>config contains 
+template (what the html will look like)
+css, output, layout, sources, etc.</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>make a folder…
+fs-extra is pretty awesome
+<a href="https://www.npmjs.com/package/fs-extra">https://www.npmjs.com/package/fs-extra</a>
+fs.mkdirs(‘anthony_rocks’, () =&gt; {
+  // create new files in here
+  fs.writeJson(‘anthony_rocks/rock.json’, { name: ‘Anthony’ }, err =&gt; {
+    if (err) return console.error(err);</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <pre><code><span class="hljs-built_in">console</span>.log(<span class="hljs-string">'success!'</span>);
+</code></pre><p>  });
+});</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>this function creates the output folder
+it goes through all of the source files you have
+it parses them and creates the necessary html files
+it copies over the CSS and public directories</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> fs.mkdirs(config.output, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">var</span> complete, copyAsset, files, nextFile;
+      callback || (callback = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>console.log(‘callback was run!’);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (error) {
+          <span class="hljs-keyword">throw</span> error;
+        }
+      });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>default callback to an empty function that handles errors
+It looks like we are not using callbacks anywhere else.
+copy assets to OUTPUT directory</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      copyAsset = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">file, callback</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>basename returns the last piece of the path. In our case, this will be the file’s name</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (!fs.existsSync(file)) {
+          <span class="hljs-keyword">return</span> callback();
+        }
+        <span class="hljs-keyword">return</span> fs.copy(file, path.join(config.output, path.basename(file)), callback);
+      };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>This copies over the CSS style sheet and public folder</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      complete = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>config.css points to the CSS we will be using to create documentation
+config.public points to all the resources that we will be using
+TODO: What is public for?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">return</span> copyAsset(config.css, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error</span>) </span>{
+          <span class="hljs-keyword">if</span> (error) {
+            <span class="hljs-keyword">return</span> callback(error);
+          }
+          <span class="hljs-keyword">if</span> (fs.existsSync(config[<span class="hljs-string">"public"</span>])) {
+            <span class="hljs-keyword">return</span> copyAsset(config[<span class="hljs-string">"public"</span>], callback);
+          }
+          <span class="hljs-keyword">return</span> callback();
+        });
+      };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>make a copy of the sources array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      files = config.sources.slice();
+
+      nextFile = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword">var</span> source;
+        source = files.shift(); <span class="hljs-comment">// get the next file on the list</span>
+        <span class="hljs-keyword">return</span> fs.readFile(source, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">error, buffer</span>) </span>{
+          <span class="hljs-keyword">var</span> code, sections;
+          <span class="hljs-keyword">if</span> (error) {
+            <span class="hljs-keyword">return</span> callback(error);
+          }
+          code = buffer.toString();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>buffers handle binary data
+buffer corresponds to raw memory
+buffer.toString() gives you a readable version of the buffer</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          sections = parse(source, code, config);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>parse breaks down the source code into the actual code and comments
+docsText, codeText
+format() adds the HTML for docs and code</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>          format(source, sections, config);
+
+          write(source, sections, config);
+          <span class="hljs-keyword">if</span> (files.length) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>recursion to go through all files</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">return</span> nextFile();
+          } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>when finished going through all files,
+run “complete” command. This will copy over the CSS and public directory</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">return</span> complete();
+          }
+        });
+      };
+      <span class="hljs-keyword">return</span> nextFile();
+    });
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>parse through the code and create sections
+the section will have docsText and codeText</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  parse = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source, code, config</span>) </span>{
+    <span class="hljs-keyword">var</span> codeText, docsText, hasCode, i, isText, j, k, lang, len, len1, line, lines, match, maybeCode, save, sections;
+    <span class="hljs-keyword">if</span> (config == <span class="hljs-literal">null</span>) {
+      config = {};
+    }
+    lines = code.split(<span class="hljs-string">'\n'</span>);
+    sections = [];
+    lang = getLanguage(source, config);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>lang contains RegExp to get JavaScript comments</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    hasCode = docsText = codeText = <span class="hljs-string">''</span>;
+    save = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>save docsText, codeText into sections array</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      sections.push({
+        <span class="hljs-attr">docsText</span>: docsText,
+        <span class="hljs-attr">codeText</span>: codeText
+      });
+      <span class="hljs-keyword">return</span> hasCode = docsText = codeText = <span class="hljs-string">''</span>;
+    };
+    <span class="hljs-keyword">if</span> (lang.literate) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>if you are a literate program language</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      isText = maybeCode = <span class="hljs-literal">true</span>;
+      <span class="hljs-keyword">for</span> (i = j = <span class="hljs-number">0</span>, len = lines.length; j &lt; len; i = ++j) {
+        line = lines[i];
+        lines[i] = maybeCode &amp;&amp; (match = <span class="hljs-regexp">/^([ ]{4}|[ ]{0,3}\t)/</span>.exec(line)) ? (isText = <span class="hljs-literal">false</span>, line.slice(match[<span class="hljs-number">0</span>].length)) : (maybeCode = <span class="hljs-regexp">/^\s*$/</span>.test(line)) ? isText ? lang.symbol : <span class="hljs-string">''</span> : (isText = <span class="hljs-literal">true</span>, lang.symbol + <span class="hljs-string">' '</span> + line);
+      }
+    }
+    <span class="hljs-keyword">for</span> (k = <span class="hljs-number">0</span>, len1 = lines.length; k &lt; len1; k++) {
+      line = lines[k];</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>is a comment?</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">if</span> (line.match(lang.commentMatcher) &amp;&amp; !line.match(lang.commentFilter)) {
+        <span class="hljs-keyword">if</span> (hasCode) {
+          save();
+        }
+        docsText += (line = line.replace(lang.commentMatcher, <span class="hljs-string">''</span>)) + <span class="hljs-string">'\n'</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>if comment is of “// —“
+then include a line break</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">if</span> (<span class="hljs-regexp">/^(---+|===+)$/</span>.test(line)) {
+          save();
+        }
+      } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-24">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-24">&#182;</a>
+              </div>
+              <p>we have actual code</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        hasCode = <span class="hljs-literal">true</span>;
+        codeText += line + <span class="hljs-string">'\n'</span>;
+      }
+    }
+    save();
+    <span class="hljs-keyword">return</span> sections;
+  };</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-25">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>adds docsHTML and codeHTML to sections</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  format = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source, sections, config</span>) </span>{
+    <span class="hljs-keyword">var</span> code, i, j, language, len, markedOptions, results, section;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
+              </div>
+              <p>we are calculating language in two different places</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    language = getLanguage(source, config);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-27">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-27">&#182;</a>
+              </div>
+              <p>marked is markdown parser/compiler
+<a href="https://www.npmjs.com/package/marked">https://www.npmjs.com/package/marked</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    markedOptions = {
+      <span class="hljs-attr">smartypants</span>: <span class="hljs-literal">true</span>
+    };
+    <span class="hljs-keyword">if</span> (config.marked) {
+      markedOptions = config.marked;
+    }
+    marked.setOptions(markedOptions);
+    marked.setOptions({</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-28">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-28">&#182;</a>
+              </div>
+              <p>highlight markdown text</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      highlight: <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">code, lang</span>) </span>{
+        lang || (lang = language.name);
+        <span class="hljs-keyword">if</span> (highlightjs.getLanguage(lang)) {
+          <span class="hljs-keyword">return</span> highlightjs.highlight(lang, code).value;
+        } <span class="hljs-keyword">else</span> {
+          <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">"docco: couldn't highlight code block with unknown language '"</span> + lang + <span class="hljs-string">"' in "</span> + source);
+          <span class="hljs-keyword">return</span> code;
+        }
+      }
+    });
+    results = [];
+    <span class="hljs-keyword">for</span> (i = j = <span class="hljs-number">0</span>, len = sections.length; j &lt; len; i = ++j) {
+      section = sections[i];
+      code = highlightjs.highlight(language.name, section.codeText).value;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-29">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-29">&#182;</a>
+              </div>
+              <p>remove whitespace characters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      code = code.replace(<span class="hljs-regexp">/\s+$/</span>, <span class="hljs-string">''</span>);
+      section.codeHtml = <span class="hljs-string">"&lt;div class='highlight'&gt;&lt;pre&gt;"</span> + code + <span class="hljs-string">"&lt;/pre&gt;&lt;/div&gt;"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-30">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-30">&#182;</a>
+              </div>
+              <p>add docs html</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      results.push(section.docsHtml = marked(section.docsText));
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-31">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-31">&#182;</a>
+              </div>
+              <p>results contains all of the docsHTML</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> results;
+  };
+
+  write = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source, sections, config</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-32">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-32">&#182;</a>
+              </div>
+              <p>source is the filename
+sections contains the HTML we need</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> destination, first, firstSection, hasTitle, html, title;
+    destination = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">file</span>) </span>{
+      <span class="hljs-keyword">var</span> _d = path.join(config.output, path.basename(file, path.extname(file)) + <span class="hljs-string">'.html'</span>);
+      <span class="hljs-keyword">return</span> _d;
+    };
+    firstSection = _.find(sections, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">section</span>) </span>{
+      <span class="hljs-keyword">return</span> section.docsText.length &gt; <span class="hljs-number">0</span>;
+    });
+    <span class="hljs-keyword">if</span> (firstSection) {
+      first = marked.lexer(firstSection.docsText)[<span class="hljs-number">0</span>];
+    }
+    hasTitle = first &amp;&amp; first.type === <span class="hljs-string">'heading'</span> &amp;&amp; first.depth === <span class="hljs-number">1</span>;
+    title = hasTitle ? first.text : path.basename(source);
+    html = config.template({
+      <span class="hljs-attr">sources</span>: config.sources,
+      <span class="hljs-attr">css</span>: path.basename(config.css),
+      <span class="hljs-attr">title</span>: title,
+      <span class="hljs-attr">hasTitle</span>: hasTitle,
+      <span class="hljs-attr">sections</span>: sections,
+      <span class="hljs-attr">path</span>: path,
+      <span class="hljs-attr">destination</span>: destination
+    });
+    <span class="hljs-keyword">return</span> fs.writeFileSync(destination(source), html);
+  };
+
+  defaults = {
+    <span class="hljs-attr">layout</span>: <span class="hljs-string">'parallel'</span>,
+    <span class="hljs-attr">output</span>: <span class="hljs-string">'docs'</span>,
+    <span class="hljs-attr">template</span>: <span class="hljs-literal">null</span>,
+    <span class="hljs-attr">css</span>: <span class="hljs-literal">null</span>,
+    <span class="hljs-attr">extension</span>: <span class="hljs-literal">null</span>,
+    <span class="hljs-attr">languages</span>: {},
+    <span class="hljs-attr">marked</span>: <span class="hljs-literal">null</span>
+  };
+
+  configure = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">options</span>) </span>{
+    <span class="hljs-keyword">var</span> config, dir;
+    config = _.extend({}, defaults, _.pick.apply(_, [options].concat(slice.call(_.keys(defaults)))));
+    config.languages = buildMatchers(config.languages);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-33">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-33">&#182;</a>
+              </div>
+              <p>options are from the commander object</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (options.template) {
+      <span class="hljs-keyword">if</span> (!options.css) {
+        <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">"docco: no stylesheet file specified"</span>);
+      }
+      config.layout = <span class="hljs-literal">null</span>;
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-34">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-34">&#182;</a>
+              </div>
+              <p>get directory of the layout we are using. parallel, classic, etc.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      dir = config.layout = path.join(__dirname, <span class="hljs-string">'resources'</span>, config.layout);
+      <span class="hljs-keyword">if</span> (fs.existsSync(path.join(dir, <span class="hljs-string">'public'</span>))) {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-35">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-35">&#182;</a>
+              </div>
+              <p>our “complete” function will copy everyting from the public directory to output directory.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>        config[<span class="hljs-string">"public"</span>] = path.join(dir, <span class="hljs-string">'public'</span>);
+      }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-36">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-36">&#182;</a>
+              </div>
+              <p>get the template and css files</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      config.template = path.join(dir, <span class="hljs-string">'docco.jst'</span>);
+      config.css = options.css || path.join(dir, <span class="hljs-string">'docco.css'</span>);
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-37">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-37">&#182;</a>
+              </div>
+              <p>convert the template to a usable template function</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    config.template = _.template(fs.readFileSync(config.template).toString());
+    <span class="hljs-keyword">if</span> (options.marked) {
+      config.marked = <span class="hljs-built_in">JSON</span>.parse(fs.readFileSync(options.marked));
+    }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-38">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-38">&#182;</a>
+              </div>
+              <p>only grab sources that are valid files</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    config.sources = options.args.filter(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source</span>) </span>{
+      <span class="hljs-keyword">var</span> lang;
+      lang = getLanguage(source, config);
+      <span class="hljs-keyword">if</span> (!lang) {
+        <span class="hljs-built_in">console</span>.warn(<span class="hljs-string">"docco: skipped unknown type ("</span> + (path.basename(source)) + <span class="hljs-string">")"</span>);
+      }
+      <span class="hljs-keyword">return</span> lang;
+    }).sort();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-39">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-39">&#182;</a>
+              </div>
+              <p>args contains all arguments that were passed to the function
+console.log(‘args’, options.args);
+console.log(‘sources’, config.sources);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">return</span> config;
+  };
+
+  _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'underscore'</span>);
+
+  fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs-extra'</span>);
+
+  path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+
+  marked = <span class="hljs-built_in">require</span>(<span class="hljs-string">'marked'</span>);
+
+  commander = <span class="hljs-built_in">require</span>(<span class="hljs-string">'commander'</span>);
+
+  highlightjs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'highlight.js'</span>);
+
+  languages = <span class="hljs-built_in">JSON</span>.parse(fs.readFileSync(path.join(__dirname, <span class="hljs-string">'resources'</span>, <span class="hljs-string">'languages.json'</span>)));</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-40">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-40">&#182;</a>
+              </div>
+              <p>create comments and comment filters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  buildMatchers = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">languages</span>) </span>{
+    <span class="hljs-keyword">var</span> ext, l;
+    <span class="hljs-keyword">for</span> (ext <span class="hljs-keyword">in</span> languages) {
+      l = languages[ext];
+      l.commentMatcher = <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">"^\\s*"</span> + l.symbol + <span class="hljs-string">"\\s?"</span>);
+      l.commentFilter = <span class="hljs-regexp">/(^#![\/]|^\s*#\{)/</span>;
+    }
+    <span class="hljs-keyword">return</span> languages;
+  };
+
+  languages = buildMatchers(languages);
+
+  getLanguage = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">source, config</span>) </span>{
+    <span class="hljs-keyword">var</span> codeExt, codeLang, ext, lang, ref;
+    ext = config.extension || path.extname(source) || path.basename(source);
+    lang = ((ref = config.languages) != <span class="hljs-literal">null</span> ? ref[ext] : <span class="hljs-keyword">void</span> <span class="hljs-number">0</span>) || languages[ext];
+    <span class="hljs-keyword">if</span> (lang &amp;&amp; lang.name === <span class="hljs-string">'markdown'</span>) {
+      codeExt = path.extname(path.basename(source, ext));
+      <span class="hljs-keyword">if</span> (codeExt &amp;&amp; (codeLang = languages[codeExt])) {
+        lang = _.extend({}, codeLang, {
+          <span class="hljs-attr">literate</span>: <span class="hljs-literal">true</span>
+        });
+      }
+    }
+    <span class="hljs-keyword">return</span> lang;
+  };
+
+  version = <span class="hljs-built_in">JSON</span>.parse(fs.readFileSync(path.join(__dirname, <span class="hljs-string">'package.json'</span>))).version;
+
+  run = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">args</span>) </span>{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-41">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-41">&#182;</a>
+              </div>
+              <p>args variable is undefined
+process.argv contains an array of arguments passed in when running this command. See <a href="https://nodejs.org/docs/latest/api/process.html#process_process_argv">https://nodejs.org/docs/latest/api/process.html#process_process_argv</a></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">var</span> c;
+    <span class="hljs-keyword">if</span> (args == <span class="hljs-literal">null</span>) {
+      args = process.argv;
+    }
+    c = defaults;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-42">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-42">&#182;</a>
+              </div>
+              <p>c is a list of default parameters. It is defined earlier in the file</p>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-43">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-43">&#182;</a>
+              </div>
+              <p>commander prints out the console.output when you run docco without arguments</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    commander
+      .version(version)
+      .usage(<span class="hljs-string">'[options] files'</span>)
+      .option(<span class="hljs-string">'-L, --languages [file]'</span>, <span class="hljs-string">'use a custom languages.json'</span>, _.compose(<span class="hljs-built_in">JSON</span>.parse, fs.readFileSync))
+      .option(<span class="hljs-string">'-l, --layout [name]'</span>, <span class="hljs-string">'choose a layout (parallel, linear or classic)'</span>, c.layout)
+      .option(<span class="hljs-string">'-o, --output [path]'</span>, <span class="hljs-string">'output to a given folder'</span>, c.output)
+      .option(<span class="hljs-string">'-c, --css [file]'</span>, <span class="hljs-string">'use a custom css file'</span>, c.css)
+      .option(<span class="hljs-string">'-t, --template [file]'</span>, <span class="hljs-string">'use a custom .jst template'</span>, c.template)
+      .option(<span class="hljs-string">'-e, --extension [ext]'</span>, <span class="hljs-string">'assume a file extension for all inputs'</span>, c.extension)
+      .option(<span class="hljs-string">'-m, --marked [file]'</span>, <span class="hljs-string">'use custom marked options'</span>, c.marked)
+      .parse(args).name = <span class="hljs-string">"docco"</span>;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-44">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-44">&#182;</a>
+              </div>
+              <p>if we have arguments, then run the “document” command.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> (commander.args.length) {
+      <span class="hljs-keyword">return</span> <span class="hljs-built_in">document</span>(commander);
+    } <span class="hljs-keyword">else</span> {</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-45">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-45">&#182;</a>
+              </div>
+              <p>if we don’t have arguments, print out help information</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">return</span> <span class="hljs-built_in">console</span>.log(commander.helpInformation());
+    }
+  };
+
+  Docco = <span class="hljs-built_in">module</span>.exports = {
+    <span class="hljs-attr">run</span>: run,
+    <span class="hljs-attr">document</span>: <span class="hljs-built_in">document</span>,
+    <span class="hljs-attr">parse</span>: parse,
+    <span class="hljs-attr">format</span>: format,
+    <span class="hljs-attr">version</span>: version
+  };
+
+}).call(<span class="hljs-keyword">this</span>);</pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>
