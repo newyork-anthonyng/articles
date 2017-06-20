@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" media="all" href="./docco.css" />
+</head>
+<body>
+  <div id="container">
+    <ul class="sections">
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre><span class="hljs-keyword">import</span> { applyMiddleware } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux'</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          returns `true` if argument is a function
+        </div>
+
+        <div class="content"><pre><span class="hljs-keyword">const</span> isFunction = <span class="hljs-function"><span class="hljs-params">arg</span> =&gt;</span> <span class="hljs-keyword">typeof</span> arg === <span class="hljs-string">'function'</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          
+The main function of redux-mock-store that creates a mock store for testing.
+This accepts an array of middleware as an argument.
+
+        </div>
+
+        <div class="content"><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">configureStore</span> (<span class="hljs-params">middlewares = []</span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mockStore</span> (<span class="hljs-params">getState = {}</span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          
+This function is a mock of a redux store, without middlewares.
+The middlewares will be applied at the end of the function.
+
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">mockStoreWithoutMiddleware</span> (<span class="hljs-params"></span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      <span class="hljs-keyword">let</span> actions = []</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      <span class="hljs-keyword">let</span> listeners = []</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      <span class="hljs-keyword">const</span> self = {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          
+You can pass in an object or a function.
+If it's an object, getState() will return that object.
+If it's a function, getState() will return the function call.
+This is effective if you want the store to return different states. For instance, the first
+call to getState might return one object. The second call to getState might return another.
+
+        </div>
+
+        <div class="content"><pre>        getState () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">return</span> isFunction(getState) ? getState() : getState</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Return the log of all actions received
+        </div>
+
+        <div class="content"><pre>        getActions () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">return</span> actions</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        dispatch (action) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          all errors returned by dispatch mimic the same ones returned by redux
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> action === <span class="hljs-string">'undefined'</span>) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>              <span class="hljs-string">'Actions may not be an undefined.'</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            )</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> action.type === <span class="hljs-string">'undefined'</span>) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>              <span class="hljs-string">'Actions may not have an undefined "type" property. '</span> +</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>              <span class="hljs-string">'Have you misspelled a constant? '</span> +</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>              <span class="hljs-string">'Action: '</span> +</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>              <span class="hljs-built_in">JSON</span>.stringify(action)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            )</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          When dispatching an action, the action gets saved in a log
+        </div>
+
+        <div class="content"><pre>          actions.push(action)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          All subscribed listeners are called
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; listeners.length; i++) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            listeners[i]()</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Return the action that was dispatched. redux returns the same
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">return</span> action</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Remove the actions log
+        </div>
+
+        <div class="content"><pre>        clearActions () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          actions = []</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        subscribe (cb) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Subscribe function calls
+in redux, an error is thrown if cb is not a function
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">if</span> (isFunction(cb)) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            listeners.push(cb)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Returns a function that can unsubscribe the cb, just like redux
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            <span class="hljs-keyword">const</span> index = listeners.indexOf(cb)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            <span class="hljs-keyword">if</span> (index &lt; <span class="hljs-number">0</span>) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>              <span class="hljs-keyword">return</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            listeners.splice(index, <span class="hljs-number">1</span>)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Add placeholder to adhere to redux api
+        </div>
+
+        <div class="content"><pre>        replaceReducer (nextReducer) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">if</span> (!isFunction(nextReducer)) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">'Expected the nextReducer to be a function.'</span>)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      <span class="hljs-keyword">return</span> self</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">const</span> mockStoreWithMiddleware = applyMiddleware(</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      ...middlewares</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    )(mockStoreWithoutMiddleware)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">return</span> mockStoreWithMiddleware()</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+    </ul>
+  </div>
+</body>
+</html>
