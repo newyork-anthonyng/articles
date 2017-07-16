@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" media="all" href="./docco.css" />
+</head>
+<body>
+  <div id="container">
+    <ul class="sections">
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Headspace</span> (<span class="hljs-params">element, opts = {}</span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">if</span> (!(<span class="hljs-keyword">this</span> <span class="hljs-keyword">instanceof</span> Headspace)) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Headspace(...arguments)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">this</span>.element = element</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">this</span>.startOffset = optionOrDefault(opts.startOffset, element &amp;&amp; element.offsetHeight)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">this</span>.tolerance = optionOrDefault(opts.tolerance, <span class="hljs-number">8</span>)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">this</span>.showAtBottom = optionOrDefault(opts.showAtBottom, <span class="hljs-literal">true</span>)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">this</span>.classNames = opts.classNames || {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    base: <span class="hljs-string">'headspace'</span>,</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    fixed: <span class="hljs-string">'headspace--fixed'</span>,</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    hidden: <span class="hljs-string">'headspace--hidden'</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">this</span>._scrollLast = <span class="hljs-number">0</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span> !== <span class="hljs-string">'undefined'</span>) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.init()</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>Headspace.prototype = {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  init () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.addClass(<span class="hljs-keyword">this</span>.classNames.base)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-built_in">window</span>.addEventListener(<span class="hljs-string">'scroll'</span>, () =&gt; <span class="hljs-keyword">this</span>.debounce(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> handleScroll(<span class="hljs-keyword">this</span>)))</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  reset () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">const</span> classNames = <span class="hljs-keyword">this</span>.classNames</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.removeClass(classNames.fixed, classNames.hidden)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          imperatively show your header
+        </div>
+
+        <div class="content"><pre>  fix () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">const</span> classNames = <span class="hljs-keyword">this</span>.classNames</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.addClass(classNames.fixed)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.removeClass(classNames.hidden)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          imperatively hide your header
+        </div>
+
+        <div class="content"><pre>  hide () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.addClass(<span class="hljs-keyword">this</span>.classNames.hidden)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Accessible for shimming
+        </div>
+
+        <div class="content"><pre>  addClass () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.element.classList.add(...arguments)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  removeClass () {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.element.classList.remove(...arguments)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          the intended usage of `requestAnimationFrame` is for debouncing animations
+https:stackoverflow.com/questions/29359177/is-it-a-good-idea-to-use-requestanimationframe-within-a-debounce-function
+        </div>
+
+        <div class="content"><pre>  debounce (callback) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-built_in">window</span>.requestAnimationFrame(callback)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>Headspace.isSupported = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">return</span> !!(<span class="hljs-keyword">typeof</span> <span class="hljs-built_in">window</span> !== <span class="hljs-string">'undefined'</span> &amp;&amp; <span class="hljs-built_in">window</span>.requestAnimationFrame &amp;&amp; <span class="hljs-string">'classList'</span> <span class="hljs-keyword">in</span> <span class="hljs-built_in">document</span>.documentElement)</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          
+Return the first argument if it is not undefined.
+Otherwise, return the second argument.
+
+        </div>
+
+        <div class="content"><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">optionOrDefault</span> (<span class="hljs-params">opt, def</span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">return</span> <span class="hljs-keyword">typeof</span> opt !== <span class="hljs-string">'undefined'</span> ? opt : def</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">handleScroll</span> (<span class="hljs-params">instance</span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">const</span> scrollCurrent = <span class="hljs-built_in">window</span>.pageYOffset <span class="hljs-comment">// number of pixels that document is scrolled vertically</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">const</span> scrollLast = instance._scrollLast <span class="hljs-comment">// previous pageYOffset</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">if</span> (scrollCurrent &lt;= <span class="hljs-number">0</span>) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          remove "fixed" and "hidden" class when at top of page
+        </div>
+
+        <div class="content"><pre>    instance.reset()</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (instance.showAtBottom &amp;&amp; (<span class="hljs-built_in">window</span>.innerHeight + scrollCurrent) &gt;= <span class="hljs-built_in">document</span>.body.offsetHeight) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          when option.showAtBottom is true
+window.innerHeight = the height of the browser viewport
+when you are at the bottom of the document.body, window.innerHeight + window.pageYOffset === document.body.offsetHeight
+document.body.offsetHeight = the height of the document.body
+add "fixed" class when at bottom of page
+        </div>
+
+        <div class="content"><pre>    instance.fix()</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (scrollCurrent &gt; instance.startOffset &amp;&amp; <span class="hljs-built_in">Math</span>.abs(scrollCurrent - scrollLast) &gt;= instance.tolerance) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          if scrolled past the Header element...
+...and the amount of the scroll is greater than the scroll tolerance that we set
+This is an interesting feature. It means that we will only show/hide the header when the user scrolls "fast"
+        </div>
+
+        <div class="content"><pre>    instance[scrollCurrent &gt; scrollLast ? <span class="hljs-string">'hide'</span> : <span class="hljs-string">'fix'</span>]()</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  instance._scrollLast = scrollCurrent</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Headspace</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+    </ul>
+  </div>
+</body>
+</html>

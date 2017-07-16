@@ -46,3 +46,5 @@ I like to think of it as a [debounce/throttle](https://css-tricks.com/the-differ
 
 ### Working with the DOM
 My main tool of choice has been React, and I've been living in its abstractions that it's provided me. Looking at some of the DOM api's that headspace used brought back some memories. Things such as `pageYOffset` and `offsetHeight`. There are a lot of students in bootcamps that get thrown straight into learning frontend libraries like React. But I think a fundamental understanding of what React is doing underneath is very important to your career.
+
+* Take a look at my annotated headspace code.
