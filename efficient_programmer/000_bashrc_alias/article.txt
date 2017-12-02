@@ -1,0 +1,19 @@
+Use bashrc alias to become a more efficient programmer
+
+There are situations where you type in long command strings into your terminal.
+[image](typing full command string)
+
+This can become error prone and tiring.
+[image](typing full command string with typo)
+
+The ~/.bashrc file is a configuration file for your terminal.
+Open up your ~/.bashrc file and type:
+`alias oc=“open coverage/lcov-info/index.html”
+[image](typing alias command into bashrc file)
+
+Try typing “oc” in your terminal, and notice that it does not work.
+[image](terminal showing command is not valid)
+
+To see any changes from your ~/.bashrc file, you need to restart your terminal.
+
+Notes: You may have seen “rc” in other contexts, such as a “.babelrc” file. The rc stands for “run commands”, and contains startup information for a command.
