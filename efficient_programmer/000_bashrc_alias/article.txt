@@ -8,10 +8,10 @@ This can become error prone and tiring.
 
 The ~/.bashrc file is a configuration file for your terminal.
 Open up your ~/.bashrc file and type:
-`alias oc=“open coverage/lcov-info/index.html”
+`alias hello='echo Hello World 👋 🌎'`
 [image](typing alias command into bashrc file)
 
-Try typing “oc” in your terminal, and notice that it does not work.
+Try typing “hello” in your terminal, and notice that it does not work.
 [image](terminal showing command is not valid)
 
 To see any changes from your ~/.bashrc file, you need to restart your terminal.
