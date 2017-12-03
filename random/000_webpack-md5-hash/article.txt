@@ -1,0 +1,20 @@
+Avoid using webpack-md5-hash when using long-term caching
+In this article, it was stated that generating hashes was not deterministic.
+https://codeburst.io/long-term-caching-of-static-assets-with-webpack-1ecb139adb95
+Due to an issue in Webpack, this method of generating hashes still isn’t deterministic. To ensure hashes are generated based on the file contents, use webpack-md5-hash plugin.
+It recommended using the webpack-md5-hash plugin, but this causes an issue where hashes aren't changed.
+Let's look at this example using Webpack and webpack-md5-hash.
+Include snippet of webpack.config.js
+This is what the output looks like.
+Include snippet of the output
+Now we change the contents of one of the files, and the output looks like this.
+Include snippet of the output
+Our manifest file holds the contents of the webpack runtime. It contains references to the other hashes that were created. Notice how, even though the contents of the runtime file changed, the file hash itself hasn't changed.
+This can cause some issues with caching.
+Now let's use the same webpack.config.js file, without the webpack-md5-hash.
+Include snippet of webpack.config.js
+This is what the output looks like.
+Include snippet of the output
+How we change the contents of one of the files, and the output looks like this.
+Include snippet of the output
+Notice how the manifest file hash has changed. Perfect!
