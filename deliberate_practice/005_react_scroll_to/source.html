@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" media="all" href="./docco.css" />
+</head>
+<body>
+  <div id="container">
+    <ul class="sections">
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre><span class="hljs-keyword">import</span> React, { Component } <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre><span class="hljs-keyword">import</span> PropTypes <span class="hljs-keyword">from</span> <span class="hljs-string">"prop-types"</span>;</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          ScrollTo.jsx
+        </div>
+
+        <div class="content"><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ScrollTo</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-keyword">constructor</span>(props) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">super</span>(props);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          ScrollTo is a parent component that will keep track of all
+ScrollArea components that gets mounted
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.scrollArea = [];</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.handleScroll = <span class="hljs-keyword">this</span>.handleScroll.bind(<span class="hljs-keyword">this</span>);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  getChildContext() {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">return</span> {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          This function will get called from ScrollArea when it gets mounted
+        </div>
+
+        <div class="content"><pre>      addScrollArea: <span class="hljs-function"><span class="hljs-params">ref</span> =&gt;</span> {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        <span class="hljs-keyword">this</span>.scrollArea = <span class="hljs-keyword">this</span>.scrollArea.concat(ref);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      },</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          This function will get called from ScrollArea when it gets unmounted
+        </div>
+
+        <div class="content"><pre>      removeScrollArea: <span class="hljs-function"><span class="hljs-params">ref</span> =&gt;</span> {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        <span class="hljs-keyword">this</span>.scrollArea = <span class="hljs-keyword">this</span>.scrollArea.filter(<span class="hljs-function"><span class="hljs-params">container</span> =&gt;</span> {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>          <span class="hljs-keyword">return</span> container !== ref;</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        });</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    };</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  handleScroll(x, y) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          If there are no ScrollArea's present, we will scroll the entire window
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.scrollArea.length === <span class="hljs-number">0</span>) {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      scrollWindow(x, y);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    } <span class="hljs-keyword">else</span> {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Otherwise, we will scroll each ScrollArea
+        </div>
+
+        <div class="content"><pre>      <span class="hljs-keyword">this</span>.scrollArea.forEach(<span class="hljs-function"><span class="hljs-params">container</span> =&gt;</span> {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        container.scrollLeft = x;</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        container.scrollTop = y;</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      });</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  render() {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          This uses the render prop pattern. All children of ScrollTo will
+have access to the "this.handleScroll" function
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.props.children &amp;&amp; <span class="hljs-keyword">this</span>.props.children(<span class="hljs-keyword">this</span>.handleScroll);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>ScrollTo.childContextTypes = {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  addScrollArea: PropTypes.func.isRequired,</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  removeScrollArea: PropTypes.func.isRequired</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>};</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          ScrollArea.jsx
+        </div>
+
+        <div class="content"><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ScrollArea</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  componentDidMount() {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Adds a reference of itself to the parent ScrollTo component
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.context.addScrollArea(<span class="hljs-keyword">this</span>.node);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  componentWillUnmount() {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          Removes the reference of itself from the parent ScrollTo component
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">this</span>.context.removeScrollArea(<span class="hljs-keyword">this</span>.node);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  render() {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">const</span> { children, ...props } = <span class="hljs-keyword">this</span>.props;</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    <span class="hljs-keyword">return</span> (</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      &lt;div {...props} ref={node =&gt; (<span class="hljs-keyword">this</span>.node = node)}&gt;</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>        {children}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>      &lt;<span class="hljs-regexp">/div&gt;</span></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>    );</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  }</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>ScrollArea.contextTypes = {</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  addScrollArea: PropTypes.func.isRequired,</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  removeScrollArea: PropTypes.func.isRequired</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>};</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation active">
+          A simple wrapper around window.scroll
+        </div>
+
+        <div class="content"><pre><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">scrollWindow</span>(<span class="hljs-params">x = <span class="hljs-number">0</span>, y = <span class="hljs-number">0</span></span>) </span>{</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>  <span class="hljs-built_in">window</span>.scroll(x, y);</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre>}</pre></div>
+      </li>
+      
+      
+      <li>
+        <div class="annotation">
+          
+        </div>
+
+        <div class="content"><pre></pre></div>
+      </li>
+      
+    </ul>
+  </div>
+</body>
+</html>
