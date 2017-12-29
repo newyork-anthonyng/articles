@@ -1,0 +1,20 @@
+Use Spectacle to become a more efficient programmer
+
+There are situations where you have to drag and resize windows.
+
+# Include a giphy of trying to resize and manipulate windows.
+
+Ever see anyone struggling for half a minute getting their windows in the right spot?
+
+# Include an image of Arthur's fist
+
+Instead, use a window management tool like Spectacle (https://www.spectacleapp.com/). (Spectacle is only available for Mac, but you should be able to find a similar tool for Windows).
+
+Spectacle gives you shortcut keys to automatically resize your windows.
+Want the window to take up the left-half of your screen? There's a command for that!
+Want the window to take up the right-half of your screen? There's a command for that!
+Want to move the window between your dual-monitor displays? There's a command for that!
+
+# Include a giphy of using Spectacle to move to the left side of the screen, right side, and quadrants.
+
+Combine this with `command + tab` to switch between windows and you'll be a magician on your desktop.
