@@ -1,15 +1,34 @@
-# Context of bug that was found
-Using webpack to bundle for server-side code
-Needed webpack because React app which used JSX, and style-loaders
-I had function that was logging to a file. On some routes the logging worked. On others it did not work.
-Investigation found that routes that went through webpack did not log correctly. Routes that did not go through webpack did log correctly.
-I found that they were logging to different files. Logger used the __dirname variable.
+// getDirname.js
+module.exports function () { return __dirname; }
 
-# Option to fix it
-https://webpack.js.org/configuration/node/#node-__dirname
-The default behavior of webpack for __dirname is to replace it with `/`.
+// app.js
+Const getDirname = require(“getDirname”);
+getDirname();
 
-Show code snippet of what __dirname was before and after the change.
+Show example with route that uses __dirname. Print it out into the console.
+# Include a Carbon image with the output of the __dirname
+
+Now let’s show it using web pack
+Show basic webpack.config.js
+// getDirname.js
+Export default function (){ return __dirname; }
+
+// app.js
+import getDirname from “./bundle.js”;
+getDirname();
+
+# Include a Carbon image with the output of the __dirname
+
+Notice how the two __dirname’s are different. This is because webpack replaces __dirname with “/“. It’s a weird default, and might cause some hard-to-find bugs.  It also does this with __filename. Take a look at the web pack docs to change it.
+
+We can update our web pack to look like this:
+# Show update webpack.config.js
+
+# And show the new output
+
+Done.
+
+I found this bug when I was using the `support/logger` that was provided from the `primer-node` application. After going crazy over this, I noticed that some logs were getting logged into Splunk correctly, but others were not. I traced this back to web pack being the culprit.
 
 # Lessons learned
 An alternative to using webpack
