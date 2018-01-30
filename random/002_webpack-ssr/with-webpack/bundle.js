@@ -79,13 +79,12 @@ console.log(Object(__WEBPACK_IMPORTED_MODULE_0__getDirname__["a" /* default */])
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(__dirname) {function getDirname() {
+function getDirname() {
   return __dirname;
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (getDirname);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "/"))
 
 /***/ })
 /******/ ]);
