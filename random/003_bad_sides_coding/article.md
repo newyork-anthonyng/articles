@@ -118,17 +118,73 @@ Ironically, I was introduced to a recruiter who helped me find my second and thi
 Tldr; the job search is going to be hard! Having these recruiter calls like I did just felt like rubbing salt on my wounds.
 
 # There is no perfect code
-* All the best practices you see in school rarely exists
-* You will see code written by developers that are inexperienced? That are overworked? That have deadlines approaching?
+In bootcamp, we were taught the best practices of coding.
+Have good variable names. Keep your code DRY. Commit your code with descriptive commit messages.
 
-# Bad developers
+These best practices aren't as common as you'd expect in the real world. The real world has business deadlines that we have to hit. The real world have inexperienced developers without proper mentorship.
+
+Whenever you do see good code, cherish it. It's surprisingly hard to come by.
+
+# Developers don't care
+The people I worked with in my bootcamp were all excited about coding. Excited might not be the right word. Passionate might not be the right word either. But everyone in the bootcamp was motivated to code well in pursuit of a new job.
+
+In the JavaScript Meetups that I went to, I was surrounded by people who were passionate about the technology. You would have to be to go to an event on your own time. These people were not a good representation of the people I would meet in my career.
+
+At the workplace, you will meet good developers who are not passionate about their work. They see it as a career path. They see it as a means to get a comfortable retirement. This is where I saw myself as a tax accountant years ago.
+
+And there is nothing wrong with that. You will meet people at different points in their lives. They will have a family. They have kids to take care of. They have housework that has to get done.
+
+But, you will also see bad developers. You will meet people that just don't care about their work. I've heard of developers who do the bare minimum during a sprint. And then in the next sprint, try doing even less. How little work can you do to not get fired?
+
+This isn't isolated to the technology industry. I know a nurse who cares very much about her patients. But her coworkers do not. They do the bare minimum and ignore patient's requests. Unless they will get in trouble, they will ignore their duties or push the responsibility to someone else. The nurses who care will have to carry the team.
+
+Tldr; during a job interview, make sure you find out about the team's culture. You don't want to be ending up on a team where your passion makes you carry the entire team.
 
 # Toxic Environment
-* Sexism
-* React Router issue
+![img](Post tech diversity numbers)
+
+The technology field is very male dominated. You may have heard about issues such as the Uber sexual harassment.
+
+Some things that you expect to be common courtesy have to be explicitly stated. Tech Conferences have had to create Codes of Conducts. This surprised me.
+
+![img](Include link about code of conduct at Conferences)
+
+
+But I was surprised by one conversation I had. Let's call the other person Bob. Bob is a developer.
+
+Bob : What are you working on?
+Me : I'm helping create a webpage for a friend.
+Bob : Really? What does he do for a living?
+Me : Well **she's** a designer.
+Bob : Oh, that explains it.
+Me : What do you mean?
+Bob : Well if it was a guy, he could have learned how to do it himself.
+
+I currently live in San Francisco, a diverse and tolerant city. So I was definitely surprised at subtle hints of sexism that I see.
+
+![img](San Francisco Tolerant)
+
+The nature of the tech field also breeds a hostile environment. You have people hiding behind their screennames and avatars. See cyber bullying
+
+I remember seeing this Github issue that was opened in React Router. The issue has since been edited, but the person rudely asked how to get something to work. He then went on to call the maintainers/creators of React Router f***in idiots.
 https://twitter.com/acemarke/status/946100880662827008
 https://github.com/ReactTraining/react-router/issues/5814
 
+I was shocked at how someone could be so hostile in an open manner. And the reason being that the free cod ethat they were using was not working as they expected.
+
+Tldr; bad people are everywhere. The tech field is not immune.
+
 # The Hustle is Bad
-Overworked
-Burnout
+You will hear people bragging about how many hours they have coded. You will hear all the side projects they are working on. And you will get pressured to do the same thing. What are you doing with your life?
+
+While these people are out there creating their next startup, you're busy trying to find your next Netflix show.
+
+Not all people are built the same. Not all people can work that much. Some people can handle more stress than others. Some need more time to relax. Dont' feel pressured to do more than you have to do. You will get burned out!
+
+There were periods where I coded all day at work. Then I would go back home and read coding tutorials And then I would do more coding on the weekends on side projects. If you do not enjoy this, do not feel obligated to do so! There is nothing wrong with you! Contrary to popular belief, it is okay to sleep.
+
+[!img](Hardcore coder)
+
+You can burn out and be tired from coding. Do not do that to yourself!
+
+In my short time as a web developer, these were some of the bad things that I've seen. Have you seen something similar? What are your experiences like?
