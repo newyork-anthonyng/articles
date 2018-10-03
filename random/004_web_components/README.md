@@ -14,5 +14,6 @@ You can see the support for Shadow DOM here. (https://caniuse.com/#feat=shadowdo
 # So this is React?
 React and Web Components solve different problems. Web Components provide strong encapsulation for reusable components. React provides a declarative library that keeps the DOM in sync with your data.
 React makes no differentiation between a native HTML element and a Web Component. It would handle your custom built Web Component like it does a normal HTML element.
-See this example of a React application using a Web Component.
+See this example of a React application using a Web Component. https://codesandbox.io/s/3vyyywp051
 The React documentation also shows how you can use React within your Web Components. I haven't found a scenario that would warrant importing React.
+
