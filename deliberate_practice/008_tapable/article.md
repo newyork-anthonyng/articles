@@ -1,19 +1,77 @@
 # What the Hook? Learn the basics of Tapable
 
 ## What is Tapable
-Tapable is a library that creates hooks for plugins. It is a core library of webpack, a popular module bundler. What makes Webpack powerful is the custom plugins you can write. Tapable creates this powerful custom plugin system. It allows you to extend, modify, and change behavior.
+Tapable is a library that creates hooks for plugins. It is a core library of [webpack](https://webpack.js.org/), a popular module bundler. What makes Webpack powerful is you can write custom plugins. Tapable creates this powerful custom plugin system using hooks.
 
 ## What are hooks?
-Hooks allow other users to tap into important events, and run the user's code when the event happens. You've probably seen this before. When you add a click event listener. The browser exposes a hook for you to tap into. When the click event actually happens, your code is run. (CODE SAMPLE)
+Hooks allow other users to get notified of important events, and run the other user's code when that important event happens. You've probably seen this before. The browser exposes many hooks for you to tap into. If you wanted to run code when a click event was going to happen, you would do this:
 
-You've probably heard of React hooks as well. Is that similar to hooks? Yes! React Component classes have various lifecycle methods, such as componentDidMount, componentDidUpdate, componentWillUnmount. You can think of all these lifecycle methods as hooks. I can add code to run when a lifecycle event happens. When that lifecycle event happens, my code runs! (CODE SAMPLE)
+```js
+// When a user clicks on the screen, a message is printed to the console
+document.addEventListener("click", function() {
+    console.log("You clicked me!");
+});
+```
 
-The new React Hooks API extracts all these component lifecycle methods out. You know longer have to use React Component classes to use these lifecycle hooks. Just use the Hooks API.
+Another example of hooks are React lifecycle methods. If you've worked with React, you've probably heard of `componentDidMount`, `componentDidUpdate`, and `componentWillUnmount`. You can think of these lifecycle methods as hooks. I can add code to run when a lifecycle event happens.
 
-## How to use hooks
-The most basic hook Tapable provides is the Synchronous Hook, or SyncHook. It runs your code synchronously. You can create a hook like so (CODE SAMPLE)
+```js
+import React from "react";
 
-A suggested pattern Tapable uses is to expose the hooks you are using through a hook property (CODE SAMPLE). This allows others to easily see what hooks are available to tap into.
+// When this component is mounted onto the screen, a message is printed to the console
+class MyComponent extends React.Component {
+    componentDidMount() {
+        console.log("I mounted onto the screen!");
+    }
+
+    render() {
+        return <h1>🎣</h1>
+    }
+}
+```
+
+> The new [React Hooks API](https://reactjs.org/docs/hooks-intro.html) allows you to use lifecycle methods outside of Component classes.
+
+## How to create hooks with Tapable
+The most basic hook Tapable provides is the `Synchronous Hook` (`SyncHook`). You can create a hook like so.
+
+```js
+import { SyncHook } from "tapable";
+
+const newHook = new SyncHook();
+```
+
+Tapable suggests exposing your hooks through a hook property. This allows developers to easily see what hooks are available to tap into. 
+
+```js
+import { SyncHook } from "tapable";
+
+class Car {
+  constructor() {
+    this.hooks = {
+      accelerate: new SyncHook()
+    };
+  }
+}
+```
+
+This is how webpack exposes its hooks to plugin authors.
+```js
+// Example taken from https://webpack.js.org/contribute/writing-a-plugin/
+class MyExampleWebpackPlugin {
+  apply(compiler) {
+    // Notice compiler.hooks 🎣
+    compiler.hooks.emit.tapAsync(
+      'MyExampleWebpackPlugin',
+      (compilation, callback) => {
+        console.log('This is an example plugin!');
+
+        callback();
+      }
+    );
+  }
+}
+```
 
 To call a hook, run its "call" method (CODE SAMPLE). Calling a hook will trigger all functions that are tapped into the hook. Think of this like your click event listener. Calling a hook is like having a "click" event getting triggered. All click event listener functions will fire now.
 You can also pass arguments to your "call" method. If you do so, be sure to add argument names when instantiating your hook. (CODE SAMPLE). 
