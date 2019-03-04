@@ -33,7 +33,7 @@ class MyComponent extends React.Component {
 > The new [React Hooks API](https://reactjs.org/docs/hooks-intro.html) allows you to use lifecycle methods outside of Component classes.
 
 ## How to create hooks with Tapable
-The most basic hook Tapable provides is the `Synchronous Hook` (`SyncHook`). You can create a hook like so.
+The most basic hook Tapable provides is the `Synchronous Hook`, or `SyncHook`. You can create a hook like so.
 
 ```js
 import { SyncHook } from "tapable";
@@ -49,13 +49,14 @@ import { SyncHook } from "tapable";
 class Car {
   constructor() {
     this.hooks = {
-      accelerate: new SyncHook()
+      startCar: new SyncHook()
     };
   }
 }
 ```
 
 This is how webpack exposes its hooks to plugin authors.
+
 ```js
 // Example taken from https://webpack.js.org/contribute/writing-a-plugin/
 class MyExampleWebpackPlugin {
@@ -73,16 +74,82 @@ class MyExampleWebpackPlugin {
 }
 ```
 
-To call a hook, run its "call" method (CODE SAMPLE). Calling a hook will trigger all functions that are tapped into the hook. Think of this like your click event listener. Calling a hook is like having a "click" event getting triggered. All click event listener functions will fire now.
-You can also pass arguments to your "call" method. If you do so, be sure to add argument names when instantiating your hook. (CODE SAMPLE). 
+To call a hook, run its `call` method.
 
-This isn't that exciting when hooks aren't getting tapped into.
+```js
+import { SyncHook } from "tapable";
+
+class Car {
+  constructor() {
+    this.hooks = {
+      carStarted: new SyncHook()
+    };
+  }
+
+  turnOn() {
+    this.hooks.carStarted.call();
+  }
+}
+
+const myCar = new Car();
+myCar.turnOn();
+```
+
+A hook will trigger all tapped functions when it is called.
+
+> Think of this like your click event listener. Calling a hook is like triggering a "click" event. All click event listener functions will fire now.
+
+You can also pass arguments to your `call` method. If you do so, be sure to add argument names when instantiating your hook.
+
+```js
+import { SyncHook } from "tapable";
+
+class Car {
+  constructor() {
+    this.hooks = {
+      carStarted: new SyncHook(),
+      radioChanged: new SyncHook(["radioStation"])
+    };
+  }
+
+  turnOn() {
+    this.hooks.carStarted.call();
+  }
+
+  setRadioStation(radioStation) {
+    thishooks.radioChanged(radioStation);
+  }
+}
+
+const myCar = new Car();
+myCar.setRadioStation("100.10");
+```
+
+This isn't exciting when nobody's listening, or tapped, into the hooks.
 
 ## How to tap hooks
-To tap into a hook, run its "tap" method (CODE SAMPLE). The first argument is the name of your plugin or reason for tapping the hook. This name is used for diagnostic information. 
-The second argument is a callback function. This is what gets called when your hook fires. If you passed any arguments to your "call" method from before, you will have access to it here.
+To tap a hook, run its `tap` method.
 
-> Think of this like your click event listener. This is the function that gets called when a "click" event happens. In the callback function, you have access to an event object. In our Plugin, you have access to the arguments that were used in our "call" method.
+```js
+const myCar = new Car();
+myCar.hooks.carStarted.tap("EngineLampPlugin", () => {
+  console.log("Car started!");
+});
+myCar.hooks.radioChanged.tap("RadioPlugin", (radioStation) => {
+  console.log(`Radio changed to ${radioStation}`);
+});
+
+myCar.turnOn();
+// "Car started!"
+
+myCar.setRadioStation("100.10");
+// "Radio changed to 100.10"
+```
+
+The first argument is the name of your plugin. This name is used for diagnostic/debugging information.
+The second argument is a callback function that is called when your hook is called. Your callback function has access to arguments passed to the hook's `call` method.
+
+> Think of this like your click event listener. This callback function is triggered when a "click" event happens. The callback function has access to the event object. Our plugin has access to the arguments used in our `call` method.
 
 ## How to intercept hooks
 Sometimes you want more granular control over where your code is run. All hooks offer an interception API. There are 3 main ways that we can intercept hooks (CODE SAMPLE).
