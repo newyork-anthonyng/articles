@@ -117,7 +117,7 @@ class Car {
   }
 
   setRadioStation(radioStation) {
-    thishooks.radioChanged(radioStation);
+    this.hooks.radioChanged.call(radioStation);
   }
 }
 
@@ -152,16 +152,174 @@ The second argument is a callback function that is called when your hook is call
 > Think of this like your click event listener. This callback function is triggered when a "click" event happens. The callback function has access to the event object. Our plugin has access to the arguments used in our `call` method.
 
 ## How to intercept hooks
-Sometimes you want more granular control over where your code is run. All hooks offer an interception API. There are 3 main ways that we can intercept hooks (CODE SAMPLE).
+Your Tapable hooks may want to know when it is getting interacted with. Hooks let you intercept the tapped code. There are 3 main ways that we can intercept.
 
 ### Register interceptor
-(CODE SAMPLE) 
-This interceptor triggers each time a Plugin taps into a hook. This code is run only once. You have access to the Tap and modify it before it goes to the hook.
+This interceptor triggers each time a Plugin taps into a hook. This code is run only once. You have access to the Tap object, which has information about such as the name of the plugin, and what function the Tap will call.
+```js
+class Car {
+  constructor() {
+    this.hooks = {
+      carStarted: new SyncHook()
+    };
+
+    this.hooks.carStarted.intercept({
+        register: (tapInfo) => {
+            console.log(`${tapInfo.name} is registered`);
+            return tapInfo;
+        }
+    })
+  }
+
+  turnOn() {
+    this.hooks.carStarted.call();
+  }
+}
+
+const myCar = new Car();
+myCar.hooks.carStarted.tap("EngineLampPlugin", () => {
+  console.log("Car started!");
+});
+// EngineLampPlugin is registered
+myCar.hooks.carStarted.tap("BluetoothPlugin", () => {
+  console.log("Bluetooth enabled");
+});
+// BluetoothPlugin is registered
+
+myCar.turnOn();
+// Car started!
+// Bluetooth enabled
+```
+
+You can also modify the Tap object in your register intercept code. For example, we can override the Tap function.
+```js
+class Car {
+  constructor() {
+    this.hooks = {
+      carStarted: new SyncHook()
+    };
+
+    this.hooks.carStarted.intercept({
+        register: (tapInfo) => {
+            if (tapInfo.name === "NitroPlugin") {
+                console.log(`🚫 ${tapInfo.name} is banned 🚫`);
+
+                tapInfo.fn = () => {
+                  console.log(`🚨 Police are on their way 🚨`);
+                };
+            } else {
+                console.log(`${tapInfo.name} is registered`);
+            }
+
+            return tapInfo;
+        }
+    })
+  }
+
+  turnOn() {
+    this.hooks.carStarted.call();
+  }
+}
+
+const myCar = new Car();
+myCar.hooks.carStarted.tap("EngineLampPlugin", () => {
+  console.log("Car started!");
+});
+// EngineLampPlugin is registered
+myCar.hooks.carStarted.tap("NitroPlugin", () => {
+  console.log("🏎 lets go fast");
+});
+// 🚫 NitroPlugin is banned 🚫
+
+myCar.turnOn();
+// Car started!
+// 🚨 Police are on their way 🚨
+```
 
 ### Call interceptor
-(CODE SAMPLE)
-This interceptor triggers each time a Hook is called. You have access  to all the hook arguments that your Plugin would have access to.
+This interceptor triggers each time a Hook is called. You have access to all the arguments that your Plugin has.
+
+```js
+class Car {
+    constructor() {
+      this.hooks = {
+        radioChanged: new SyncHook(["radioStation"])
+      };
+  
+      this.hooks.radioChanged.intercept({
+        call: (radioStation) => {
+            console.log("Looking for signal...");
+            console.log(`Signal found for ${radioStation}`);
+        }
+      })
+    }
+
+    setRadioStation(radioStation) {
+        this.hooks.radioChanged.call(radioStation);
+    }
+  }
+  
+  const myCar = new Car();
+  myCar.hooks.radioChanged.tap("RadioPlugin", radioStation => {
+    console.log("Station was changed", radioStation);
+  });
+  
+  myCar.setRadioStation("100.1");
+  // Looking for signal...
+  // Signal found for 100.1
+  // Station was changed 100.1
+
+  myCar.setRadioStation("100.3");
+  // Looking for signal...
+  // Signal found for 100.1
+  // Station was changed 100.1
+```
 
 ### Tap interceptor
-(CODE SAMPLE)
-This interceptor triggers each time a Hook is called, and for each Plugin that is tapped onto the hook. You have access to the Tap object. But unlike the register interceptor, you cannot change the Tap object.
+This interceptor triggers each time a Hook is called. This is different than the `call` interceptor because it triggers once for each Plugin that is tapped to the Hook. You have access to the Tap object, but cannot change the Tap object.
+
+```js
+class Car {
+    constructor() {
+      this.hooks = {
+        radioChanged: new SyncHook(["radioStation"])
+      };
+  
+      this.hooks.radioChanged.intercept({
+        tap: (tapInfo) => {
+            console.log(`${tapInfo.name} is getting called`);
+        }
+      })
+    }
+
+    setRadioStation(radioStation) {
+        this.hooks.radioChanged.call(radioStation);
+    }
+  }
+  
+  const myCar = new Car();
+  myCar.hooks.radioChanged.tap("RadioPlugin", radioStation => {
+    console.log("Station was changed", radioStation);
+  });
+  myCar.hooks.radioChanged.tap("SpeakerPlugin", radioStation => {
+    console.log("Updating Speaker UI", radioStation);
+  });
+  
+  myCar.setRadioStation("100.1");
+  // RadioPlugin is getting called
+  // Station was changed 100.1
+  // SpeakerPlugin is getting called
+  // Updating Speaker UI 100.1
+
+  myCar.setRadioStation("100.3");
+  // RadioPlugin is getting called
+  // Station was changed 100.3
+  // SpeakerPlugin is getting called
+  // Updating Speaker UI 100.3
+```
+
+## UI Example
+
+
+## Conclusion
+This was a brief introduction to Tapable Hooks. Let me know if you've found other useful ways to use hooks.
